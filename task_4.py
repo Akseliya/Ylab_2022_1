@@ -7,21 +7,21 @@ def bananas(s) -> set:
     if len(s) < len(banana):
         return result
 
-    # составление бинарных комбинаций
-    combs = []
-    i = 63  # '0b111111'
-    bin_str = bin(i)[2:]
-    while len(bin_str) <= len(s):
-        if bin_str.count('1') == len(banana):
-            new_comb = '0' * (len(s) - len(bin_str)) + bin_str
-            combs.append(tuple(bool(int(x)) for x in new_comb))
-        i += 1
-        bin_str = bin(i)[2:]
-
-    for comb in combs:
-        if ''.join(itertools.compress(s, comb)) != banana:
-            continue
-        new_str = ''.join(s[i] if comb[i] else '-' for i in range(len(s)))
-        result.add(new_str)
+    index_combs = itertools.combinations((i for i in range(len(s))),
+                                         len(s) - len(banana))
+    for index_comb in index_combs:
+        index_comb = set(index_comb)
+        banana_i = 0
+        new_str = ''
+        for i in range(len(s)):
+            if i in index_comb:
+                new_str += '-'
+                continue
+            if s[i] != banana[banana_i]:
+                break
+            new_str += banana[banana_i]
+            banana_i += 1
+        else:
+            result.add(new_str)
 
     return result
