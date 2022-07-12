@@ -1,5 +1,8 @@
+from typing import Any, Generator
+
+
 class CyclicIterator:
-    def __init__(self, iter_object):
+    def __init__(self, iter_object: Generator[Any, Any, Any]):
         self.iter_object = iter_object
         self.iterator = iter(iter_object)
 
