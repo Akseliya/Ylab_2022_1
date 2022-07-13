@@ -1,24 +1,40 @@
+from abc import ABC, abstractmethod
+
 from places import Place
 from weapons import Gun, HandToHandFight, Laser
 
 
-class SuperHero:
+class SuperHeroInterface(ABC):
 
-    def __init__(self, name: str, can_use_ultimate_attack: bool = True):
-        self.name = name
-        self.can_use_ultimate_attack = can_use_ultimate_attack
+    @property
+    @abstractmethod
+    def name(self):
+        ...
+
+    @property
+    @abstractmethod
+    def can_use_ultimate_attack(self):
+        ...
+
+    @abstractmethod
+    def find(self, place: Place):
+        ...
+
+    @abstractmethod
+    def attack(self):
+        ...
+
+
+class SuperHeroBase():
+    can_use_ultimate_attack = False
 
     def find(self, place: Place):
         place.get_villain()
 
-    def attack(self):
-        HandToHandFight.kick()
 
-
-class Superman(SuperHero):
-
-    def __init__(self):
-        super().__init__('Clark Kent')
+class Superman(SuperHeroBase, SuperHeroInterface):
+    name = 'Clark Kent'
+    can_use_ultimate_attack = True
 
     def attack(self):
         HandToHandFight.kick()
@@ -27,10 +43,8 @@ class Superman(SuperHero):
         Laser.incinerate_with_lasers()
 
 
-class ChackNorris(SuperHero):
-
-    def __init__(self):
-        super().__init__('Chack Norris', False)
+class ChackNorris(SuperHeroBase, SuperHeroInterface):
+    name = 'Chack Norris'
 
     def attack(self):
         Gun.fire_a_gun()

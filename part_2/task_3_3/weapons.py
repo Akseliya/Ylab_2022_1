@@ -1,21 +1,18 @@
-from abc import ABC
-
-
-class Gun(ABC):
+class Gun():
 
     @staticmethod
     def fire_a_gun():
         print('PIU PIU')
 
 
-class Laser(ABC):
+class Laser():
 
     @staticmethod
     def incinerate_with_lasers():
         print('Wzzzuuuup!')
 
 
-class HandToHandFight(ABC):
+class HandToHandFight():
 
     @staticmethod
     def kick():
